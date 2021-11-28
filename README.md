@@ -1,2 +1,1 @@
-# cpprestsdk
-Simple Crud with cpprestsdk
+4 Simple Rest Servers using different libraries

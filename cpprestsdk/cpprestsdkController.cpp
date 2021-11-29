@@ -56,11 +56,13 @@ void cpprestsdkController::handle_post(http_request request) {
 
 
 void cpprestsdkController::handle_get(http_request request){
+
     //to implement
     std::cout <<"\nhandle GET\n";
-    std::cout <<"\nHello World\n";
     request.reply(status_codes::OK);
 
+    //if not found
+    //request.reply(status_codes::NotFound);
 }
 
 

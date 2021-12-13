@@ -47,7 +47,20 @@ pplx::task<void> cpprestsdkController::closeServer(){
 }
 
 void cpprestsdkController::handle_remove(http_request request) {
-//to implement
+
+    //Get Id from last position of the string
+    vector<basic_string<char>> paths=http::uri::split_path(http::uri::decode(request.relative_uri().path()));
+    int id;
+    if(!paths.empty()){
+        id = std::stoi(paths.back());
+    }
+
+    //Remove the student
+    this->service.removing(id);
+
+
+    //Send the Reply with HTTP Code OK and Json
+    request.reply(status_codes::OK,"Successful");
 }
 
 void cpprestsdkController::handle_update(http_request request) {
@@ -56,29 +69,30 @@ void cpprestsdkController::handle_update(http_request request) {
 
 void cpprestsdkController::handle_post(http_request request) {
     //to implement
+    auto id = request.extract_json().then([](json::value jsonObject){
+        std::cout << jsonObject[U("id")].as_integer();
+    });
 
 }
 
 
 void cpprestsdkController::handle_get(http_request request){
 
-    //to implement
-
-
-
+    //Get Id from last position of the string
     vector<basic_string<char>> paths=http::uri::split_path(http::uri::decode(request.relative_uri().path()));
-int id;
+    int id;
     if(!paths.empty()){
        id = std::stoi(paths.back());
     }
 
+    //Fetch the student
     Student student = this->service.fetching(id);
 
+
+    //Send the Reply with HTTP Code OK and Json
     request.reply(status_codes::OK,student.toJson());
 
-    //Studentregistryservice::fetching()
-    //if not found
-    //request.reply(status_codes::NotFound);
+
 }
 
 

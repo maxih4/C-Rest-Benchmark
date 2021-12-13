@@ -29,9 +29,9 @@ bool Studentregistryservice::adding(Student student){
     return true;
 }
 
-bool Studentregistryservice::removing(Student student) {
+bool Studentregistryservice::removing(int id) {
     m.lock();
-    this->studentMap.erase(student.getId());
+    this->studentMap.erase(id);
     m.unlock();
     return true;
 }

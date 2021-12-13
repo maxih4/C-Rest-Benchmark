@@ -16,7 +16,7 @@ public:
 
     Student fetching(int id);
     bool adding(Student student);
-    bool removing(Student student);
+    bool removing(int id);
 
     Studentregistryservice();
 

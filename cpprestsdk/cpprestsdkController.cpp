@@ -2,12 +2,17 @@
 // Created by max on 15.11.21.
 //
 
-#include "cpprestsdkController.h"
+#include "cpprestsdkController.hpp"
 #include <cpprest/http_listener.h>
 #include <pplx/pplxtasks.h>
+#include "../service/studentregistryservice.hpp"
+#include "../data/student.hpp"
 
 
-cpprestsdkController::cpprestsdkController() {}
+cpprestsdkController::cpprestsdkController() {
+    Studentregistryservice srs;
+    this->service=srs;
+}
 
 
 
@@ -58,9 +63,20 @@ void cpprestsdkController::handle_post(http_request request) {
 void cpprestsdkController::handle_get(http_request request){
 
     //to implement
-    std::cout <<"\nhandle GET\n";
-    request.reply(status_codes::OK);
 
+
+
+    vector<basic_string<char>> paths=http::uri::split_path(http::uri::decode(request.relative_uri().path()));
+int id;
+    if(!paths.empty()){
+       id = std::stoi(paths.back());
+    }
+
+    Student student = this->service.fetching(id);
+
+    request.reply(status_codes::OK,student.toJson());
+
+    //Studentregistryservice::fetching()
     //if not found
     //request.reply(status_codes::NotFound);
 }

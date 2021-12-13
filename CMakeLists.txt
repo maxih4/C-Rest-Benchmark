@@ -3,7 +3,7 @@ project(cpprestsdk)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp cpprestsdk/cpprestsdkController.cpp cpprestsdk/cpprestsdkController.h)
+set(SOURCE_FILES main.cpp cpprestsdk/cpprestsdkController.cpp cpprestsdk/cpprestsdkController.hpp data/student.cpp data/student.hpp service/studentregistryservice.cpp service/studentregistryservice.hpp)
 add_executable(cpprestsdk ${SOURCE_FILES})
 
 find_library(CPPREST_LIB cpprest)

@@ -2,10 +2,11 @@
 // Created by max on 15.11.21.
 //
 
-#ifndef CPPRESTSDK_CPPRESTSDKCONTROLLER_H
-#define CPPRESTSDK_CPPRESTSDKCONTROLLER_H
+#ifndef CPPRESTSDK_CPPRESTSDKCONTROLLER_HPP
+#define CPPRESTSDK_CPPRESTSDKCONTROLLER_HPP
 #include <cpprest/http_listener.h>
 #include <pplx/pplxtasks.h>
+#include "../service/studentregistryservice.hpp"
 using namespace web;
 using namespace http;
 using namespace http::experimental::listener;
@@ -27,7 +28,10 @@ public:
     void handle_remove(http_request request);
 
     http_listener listener;
+private:
+    Studentregistryservice service;
+
 };
 
 
-#endif //CPPRESTSDK_CPPRESTSDKCONTROLLER_H
+#endif //CPPRESTSDK_CPPRESTSDKCONTROLLER_HPP

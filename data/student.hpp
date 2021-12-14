@@ -7,6 +7,7 @@
 using namespace std;
 
 #include <string>
+#include <cpprest/json.h>
 
 class Student {
 
@@ -21,6 +22,8 @@ public:
     std::string toJson();
 
     Student(int id, std::string name, int age);
+
+    web::json::value toJson2();
 private:
     int id;
     string name;

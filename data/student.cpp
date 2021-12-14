@@ -6,6 +6,7 @@
 
 
 
+
 Student::Student(int id, std::string name, int age) {
     this->id = id;
     this->name = name;
@@ -39,4 +40,15 @@ std::string Student::toJson(){
     json.append("}");
 
 return json;
+}
+
+
+web::json::value Student::toJson2(){
+
+    using namespace web;
+    json::value object;
+    object["id"]=json::value::number(this->id);
+    object["name"]=json::value::string(this->name);
+    object["alter"]=json::value::number(this->age);
+    return object;
 }

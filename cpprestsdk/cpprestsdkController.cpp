@@ -67,11 +67,17 @@ void cpprestsdkController::handle_update(http_request request) {
     //to implement
 }
 
-void cpprestsdkController::handle_post(http_request request) {
+void cpprestsdkController::handle_post(http_request message) {
     //to implement
-    auto id = request.extract_json().then([](json::value jsonObject){
-        std::cout << jsonObject[U("id")].as_integer();
-    });
+    try {
+        message.extract_json().then([message](web::json::value body)
+                                    {std::cout << body["id"];
+                                        message.reply(status_codes::OK, body);
+                                    });
+    }catch(const exception& e){
+        std::cout << "JOJO";
+        std::cout << e.what();
+    }
 
 }
 
@@ -90,7 +96,8 @@ void cpprestsdkController::handle_get(http_request request){
 
 
     //Send the Reply with HTTP Code OK and Json
-    request.reply(status_codes::OK,student.toJson());
+    //request.reply(status_codes::OK,student.toJson());
+    request.reply(status_codes::OK,student.toJson2());
 
 
 }

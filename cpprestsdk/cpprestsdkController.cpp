@@ -68,17 +68,25 @@ void cpprestsdkController::handle_update(http_request request) {
 }
 
 void cpprestsdkController::handle_post(http_request message) {
-    //to implement
-    try {
-        message.extract_json().then([message](web::json::value body)
-                                    {std::cout << body["id"];
-                                        message.reply(status_codes::OK, body);
-                                    });
-    }catch(const exception& e){
-        std::cout << "JOJO";
-        std::cout << e.what();
+    json::value jsonObjectRequest;
+    json::value jsonObjectResponse;
+    int id;
+    try{
+        message.extract_json()
+                .then([&jsonObjectRequest,&jsonObjectResponse,&id](json::value jo){
+                    jsonObjectRequest = jo;
+                    id = jsonObjectRequest[U("id")].as_integer();
+                    //Add json Object to our Map and then answer with success
+                    //jsonObjectResponse = this->service.adding()
+                })
+                .wait();
     }
+    catch (const std::exception & e) {
+        printf("Error exception:%s\n", e.what());
+    }
+    //jsonObject[U("cherry")] = json::value::string(U("C"));
 
+    message.reply(status_codes::OK,jsonObjectResponse);
 }
 
 

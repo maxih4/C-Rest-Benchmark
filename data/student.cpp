@@ -52,3 +52,11 @@ web::json::value Student::toJson2(){
     object["alter"]=json::value::number(this->age);
     return object;
 }
+
+void Student::setName(const string &name) {
+    Student::name = name;
+}
+
+void Student::setAge(int age) {
+    Student::age = age;
+}

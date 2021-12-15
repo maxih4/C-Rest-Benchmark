@@ -10,6 +10,10 @@ using namespace std;
 #include <cpprest/json.h>
 
 class Student {
+public:
+    void setName(const string &name);
+
+    void setAge(int age);
 
 public:
     Student()=default;

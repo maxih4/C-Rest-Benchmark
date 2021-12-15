@@ -64,29 +64,66 @@ void cpprestsdkController::handle_remove(http_request request) {
 }
 
 void cpprestsdkController::handle_update(http_request request) {
-    //to implement
+    //Get Id from last position of the string
+    vector<basic_string<char>> paths=http::uri::split_path(http::uri::decode(request.relative_uri().path()));
+    int id;
+    json::value jsonObjectRequest;
+    json::value jsonObjectResponse;
+    if(!paths.empty()){
+        id = std::stoi(paths.back());
+    }
+
+
+
+    request.extract_json()
+            .then([&jsonObjectRequest,&jsonObjectResponse,&student,this](json::value jo){
+
+                //Fetch the student
+                Student student = this->service.fetching(id);
+
+                //remove the student
+                this->service.removing(id);
+
+//update the student
+                jsonObjectRequest = jo;
+                student.setName(jsonObjectRequest[U("name")].as_string());
+                student.setAge(jsonObjectRequest[U("age")].as_integer());
+                this->service.adding(student);
+                jsonObjectResponse = student.toJson2();
+                //Add json Object to our Map and then answer with success
+                //jsonObjectResponse = this->service.adding()
+            })
+            .wait();
+
+
+    //Send the Reply with HTTP Code OK and Json
+    //request.reply(status_codes::OK,student.toJson());
+    request.reply(status_codes::OK,jsonObjectResponse);
 }
 
-void cpprestsdkController::handle_post(http_request message) {
+void cpprestsdkController::handle_post(http_request request) {
     json::value jsonObjectRequest;
     json::value jsonObjectResponse;
     int id;
-    try{
-        message.extract_json()
-                .then([&jsonObjectRequest,&jsonObjectResponse,&id](json::value jo){
+    std::string name;
+    int age;
+
+        request.extract_json()
+                .then([&jsonObjectRequest,&jsonObjectResponse,&id,&name,&age,this](json::value jo){
                     jsonObjectRequest = jo;
                     id = jsonObjectRequest[U("id")].as_integer();
-                    //Add json Object to our Map and then answer with success
-                    //jsonObjectResponse = this->service.adding()
+                    name = jsonObjectRequest[U("name")].as_string();
+                    age = jsonObjectRequest[U("age")].as_integer();
+                    Student student(id,name,age);
+                    this->service.adding(student);
+                    jsonObjectResponse = student.toJson2();
+
                 })
                 .wait();
-    }
-    catch (const std::exception & e) {
-        printf("Error exception:%s\n", e.what());
-    }
-    //jsonObject[U("cherry")] = json::value::string(U("C"));
 
-    message.reply(status_codes::OK,jsonObjectResponse);
+
+
+   request.reply(status_codes::OK,jsonObjectResponse);
 }
 
 

@@ -76,7 +76,7 @@ void cpprestsdkController::handle_update(http_request request) {
 
 
     request.extract_json()
-            .then([&jsonObjectRequest,&jsonObjectResponse,&student,this](json::value jo){
+            .then([&jsonObjectRequest,&jsonObjectResponse,&id,this](json::value jo){
 
                 //Fetch the student
                 Student student = this->service.fetching(id);

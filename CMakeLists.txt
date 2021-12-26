@@ -3,7 +3,7 @@ project(cpprestsdk)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(SOURCE_FILES main.cpp cpprestsdk/cpprestsdkController.cpp cpprestsdk/cpprestsdkController.hpp data/student.cpp data/student.hpp service/studentregistryservice.cpp service/studentregistryservice.hpp pistacheLib/HelloHandler.cpp pistacheLib/HelloHandler.h)
+set(SOURCE_FILES main.cpp cpprestsdk/cpprestsdkController.cpp cpprestsdk/cpprestsdkController.hpp data/student.cpp data/student.hpp service/studentregistryservice.cpp service/studentregistryservice.hpp pistacheLib/pistacheController.cpp pistacheLib/pistacheController.h)
 add_executable(cpprestsdk ${SOURCE_FILES})
 find_package(PkgConfig)
 pkg_check_modules(Pistache REQUIRED IMPORTED_TARGET libpistache)

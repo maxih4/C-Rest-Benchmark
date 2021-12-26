@@ -14,7 +14,7 @@ using namespace web::http::experimental::listener;
 #include <map>
 #include "service/studentregistryservice.hpp"
 
-#include "pistacheLib/HelloHandler.h"
+#include "pistacheLib/pistacheController.h"
 #include "pistache/endpoint.h"
 
 
@@ -28,13 +28,8 @@ void startCppRestSdk(){
 }
 
 void startPistache(){
-    Pistache::Address addr(Pistache::Ipv4::any(), Pistache::Port(9080));
-    auto opts = Pistache::Http::Endpoint::options()
-            .threads(1);
-    Pistache::Http::Endpoint server(addr);
-    server.init(opts);
-    server.setHandler(Pistache::Http::make_handler<HelloHandler>());
-    server.serve();
+    pistacheController app({Ipv4::any(), 9000});
+    app.serve();
 }
 int main(int argc, char** argv)
 {

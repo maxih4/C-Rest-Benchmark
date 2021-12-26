@@ -18,6 +18,8 @@ using namespace web::http::experimental::listener;
 #include "pistache/endpoint.h"
 
 
+#include "crow/crowController.h"
+
 void startCppRestSdk(){
     cpprestsdkController controller;
 
@@ -31,9 +33,14 @@ void startPistache(){
     pistacheController app({Ipv4::any(), 9000});
     app.serve();
 }
+
+void startCrow(){
+    crowController controller;
+    controller.setupServer();
+}
 int main(int argc, char** argv)
 {
-    startPistache();
+    startCrow();
 
 
 }

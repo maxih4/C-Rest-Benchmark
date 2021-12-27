@@ -6,6 +6,7 @@
 #define CPPRESTSDK_CROWCONTROLLER_H
 
 #include "../ressources/crow/crow_all.h"
+#include "../service/studentregistryservice.hpp"
 
 
 class crowController {
@@ -14,11 +15,11 @@ class crowController {
 
 public:
     crowController();
-    void setRoutes();
+
 void setupServer();
 
 private:
-    crow::SimpleApp app;
+    Studentregistryservice service;
 };
 
 

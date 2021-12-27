@@ -8,9 +8,8 @@
 #include "../service/studentregistryservice.hpp"
 #include "../data/student.hpp"
 
-crowController::crowController(){
-    Studentregistryservice srs;
-    this->service=srs;
+crowController::crowController(Studentregistryservice srs):service(srs) {
+
 };
 
 

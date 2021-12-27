@@ -20,8 +20,8 @@ using namespace web::http::experimental::listener;
 
 #include "crow/crowController.h"
 
-void startCppRestSdk(){
-    cpprestsdkController controller;
+void startCppRestSdk(Studentregistryservice srs){
+    cpprestsdkController controller(srs);
 
     controller.createServer();
     controller.openListeners();
@@ -29,19 +29,20 @@ void startCppRestSdk(){
     while(true);
 }
 
-void startPistache(){
-    pistacheController app({Ipv4::any(), 9000});
+void startPistache(Studentregistryservice srs){
+    pistacheController app({Ipv4::any(), 9000},srs);
     app.serve();
 }
 
-void startCrow(){
-    crowController controller;
+void startCrow(Studentregistryservice srs){
+    crowController controller(srs);
     controller.setupServer();
 }
 int main(int argc, char** argv)
 {
-    startCrow();
-
+    Studentregistryservice srs;
+    //startCrow(srs);
+    startPistache(srs);
 
 }
 

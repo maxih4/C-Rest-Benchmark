@@ -14,9 +14,11 @@ class crowController {
 
 
 public:
-    crowController();
+    crowController(Studentregistryservice srs);
 
-void setupServer();
+
+
+    void setupServer();
 
 private:
     Studentregistryservice service;

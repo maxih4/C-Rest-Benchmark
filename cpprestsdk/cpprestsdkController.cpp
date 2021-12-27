@@ -9,9 +9,8 @@
 #include "../data/student.hpp"
 
 
-cpprestsdkController::cpprestsdkController() {
-    Studentregistryservice srs;
-    this->service=srs;
+cpprestsdkController::cpprestsdkController(Studentregistryservice srs):service(srs) {
+
 }
 
 

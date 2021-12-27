@@ -4,9 +4,8 @@
 
 #include "pistacheController.h"
 
-pistacheController::pistacheController(Address addr):Http::Endpoint(addr) {
-    Studentregistryservice srs;
-    this->service=srs;
+pistacheController::pistacheController(Address addr,Studentregistryservice srs):Http::Endpoint(addr),service(srs) {
+
 
 
     Pistache::Rest::Routes::Get(pistacheController::router,"/students/:id",Pistache::Rest::Routes::bind(

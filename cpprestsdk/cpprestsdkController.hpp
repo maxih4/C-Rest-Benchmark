@@ -13,7 +13,8 @@ using namespace http::experimental::listener;
 
 class cpprestsdkController {
 public:
-    cpprestsdkController();
+
+    cpprestsdkController(Studentregistryservice srs);
 
     void createServer();
     pplx::task<void> openServer();

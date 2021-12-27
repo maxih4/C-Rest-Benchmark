@@ -18,10 +18,12 @@ using namespace Pistache;
 
 
 class pistacheController : public Http::Endpoint {
+
+
     Pistache::Rest::Router router;
     Studentregistryservice service;
 public:
-    pistacheController(Address addr);
+    pistacheController(Address addr, Studentregistryservice srs);
     void handleGet(const Rest::Request& req, Http::ResponseWriter res);
     void handlePost(const Rest::Request& req, Http::ResponseWriter res);
     void handlePut(const Rest::Request& req, Http::ResponseWriter res);

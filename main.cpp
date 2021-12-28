@@ -41,8 +41,8 @@ void startCrow(Studentregistryservice srs){
 int main(int argc, char** argv)
 {
     Studentregistryservice srs;
-    //startCrow(srs);
-    startPistache(srs);
+    startCrow(srs);
+    //startPistache(srs);
 
 }
 

@@ -3,7 +3,6 @@
 //
 #define CROW_MAIN
 
-#include <rapidjson/document.h>
 #include "crowController.h"
 #include "../service/studentregistryservice.hpp"
 #include "../data/student.hpp"
@@ -18,23 +17,29 @@ void crowController::setupServer(){
     crow::SimpleApp app;
     rapidjson::Document document;
 
+
+
     //Get
     CROW_ROUTE(app,"/students/<int>").methods(crow::HTTPMethod::GET)([this](int id){
         Student stud = this->service.fetching(id);
-        return stud.toJson();
+        crow::json::wvalue studJ;
+        studJ["age"] = stud.getAge();
+        studJ["id"] = stud.getId();
+        studJ["name"] = stud.getName();
+        return studJ;
     });
 
     //Post
     CROW_ROUTE(app,"/students/").methods(crow::HTTPMethod::POST)([&document,this](const crow::request& req){
+        auto jsonObj= crow::json::load(req.body);
 
-        document.Parse<0>(req.body.c_str());
-        int id = document["id"].GetInt();
-        int age = document["age"].GetInt();
-        std::string name = document["name"].GetString();
 
-        Student stud(id,name,age);
+        Student stud(jsonObj["id"].i(),jsonObj["name"].s(),jsonObj["age"].i());
+
         this->service.adding(stud);
-        return crow::response{stud.toJson()};
+        crow::json::wvalue w(jsonObj);
+
+        return crow::response(w.dump());
 
     });
 
@@ -46,22 +51,23 @@ void crowController::setupServer(){
 
     //Put
     CROW_ROUTE(app,"/students/<int>").methods(crow::HTTPMethod::PUT)([&document,this](const crow::request& req,int id){
-
-        document.Parse<0>(req.body.c_str());
-        int age = document["age"].GetInt();
-        std::string name = document["name"].GetString();
+        auto jsonObj= crow::json::load(req.body);
 
         Student stud = this->service.fetching(id);
 
 
         this->service.removing(id);
 
-        stud.setAge(age);
-        stud.setName(name);
+        stud.setAge(jsonObj["age"].i());
+        stud.setName(jsonObj["name"].s());
         this->service.adding(stud);
-        return crow::response{stud.toJson()};
 
+
+        crow::json::wvalue jsonResp(jsonObj);
+        jsonResp["id"] = id;
+        return crow::response(jsonResp.dump());
     });
+
 
     app.port(10000).multithreaded().run();
 }

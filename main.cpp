@@ -22,7 +22,7 @@ using namespace web::http::experimental::listener;
 
 
 #include "oatpp/web/server/HttpConnectionHandler.hpp"
-#include "oatpp/MyController.h"
+#include "oatpp/oatppController.h"
 #include "oatpp/network/Server.hpp"
 #include "oatpp/network/tcp/server/ConnectionProvider.hpp"
 
@@ -51,13 +51,14 @@ void startOatpp(Studentregistryservice srs){
     oatpp::base::Environment::init();
     /* Create Router for HTTP requests routing */
     auto router = oatpp::web::server::HttpRouter::createShared();
+
     OATPP_CREATE_COMPONENT(std::shared_ptr<oatpp::data::mapping::ObjectMapper>, apiObjectMapper)([] {
         auto objectMapper = oatpp::parser::json::mapping::ObjectMapper::createShared();
         objectMapper->getDeserializer()->getConfig()->allowUnknownFields = false;
         return objectMapper;
     }());
 
-    router->addController(std::make_shared<MyController>());
+    router->addController(std::make_shared<oatppController>());
 
     /* Create HTTP connection handler with router */
     auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);

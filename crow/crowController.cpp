@@ -3,6 +3,7 @@
 //
 #define CROW_MAIN
 
+#include <rapidjson/document.h>
 #include "crowController.h"
 #include "../service/studentregistryservice.hpp"
 #include "../data/student.hpp"

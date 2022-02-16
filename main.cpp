@@ -38,8 +38,10 @@ void startCppRestSdk(Studentregistryservice srs){
 }
 
 void startPistache(Studentregistryservice srs){
-    pistacheController app({Ipv4::any(), 9000},srs);
+    pistacheController app({"192.168.0.28", 10011},srs);
+    app.init(Pistache::Http::Endpoint::options().threads(std::thread::hardware_concurrency()));
     app.serve();
+
 }
 
 void startCrow(Studentregistryservice srs){
@@ -64,7 +66,7 @@ void startOatpp(Studentregistryservice srs){
     auto connectionHandler = oatpp::web::server::HttpConnectionHandler::createShared(router);
 
     /* Create TCP connection provider */
-    auto connectionProvider = oatpp::network::tcp::server::ConnectionProvider::createShared({"localhost", 8000, oatpp::network::Address::IP_4});
+    auto connectionProvider = oatpp::network::tcp::server::ConnectionProvider::createShared({"192.168.0.28", 8010, oatpp::network::Address::IP_4});
 
     /* Create server which takes provided TCP connections and passes them to HTTP connection handler */
     oatpp::network::Server server(connectionProvider, connectionHandler);
@@ -82,9 +84,9 @@ int main(int argc, char** argv)
 {
     Studentregistryservice srs;
     //startCrow(srs);
-    //startPistache(srs);
-
-    startOatpp(srs);
+    startPistache(srs);
+    //startCppRestSdk(srs);
+    //startOatpp(srs);
 
 
 }

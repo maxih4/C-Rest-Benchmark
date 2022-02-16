@@ -70,5 +70,5 @@ void crowController::setupServer(){
     });
 
 
-    app.port(10000).multithreaded().run();
+    app.bindaddr("192.168.0.28").port(7011).multithreaded().run();
 }
